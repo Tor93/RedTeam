@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<body>
+ <h1>Email System</h1>
+
+ <h1>{{ content }}</h1>
+
+
+ <form action="/email" method = post>
+  <dl>
+   <dt>보내는 사람 </dt>
+   <dd>
+    <input type="text" name=email_sender style="width:300px;" value="" />
+   </dd>
+   <br>
+  
+   <dt>받는 사람</dt>
+   <dd>
+    <input type="text" name=email_receiver style="width:300px;" value="" />
+   </dd>
+   <br>
+
+   <dt>메일 제목</dt>
+   <dd>
+    <input type="text" name=email_title style="width:300px;" value="" />
+   </dd>
+   <br>
+
+   <dt>메일 내용</dt>
+   <dd>
+    <input type="text" name=email_content style="width:300px;height:200px;font-size:30px;" value="">
+   </dd>
+  </dl>
+  <p>
+   <input type=submit value=Send>
+  </p>
+ </form>
+
+</body>
+</html>
