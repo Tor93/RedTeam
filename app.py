@@ -37,10 +37,14 @@ Sent = 0
 
 # Email 전송 로직
 # 고도화 예정 -> 메일 발송 성공, 오류 예외처리
+# (추가사항) 이전 로직에서는 받는 사람이 receiver 전부로 나와 있기 때문에 받는 사람이 한명씩 보이게 하기 위해 구문 추가
 def email2(senders, receiver,title,content):
-    msg = Message(title, sender = senders, recipients = receiver)
-    msg.body = content
-    mail.send(msg)
+    for person in receiver:		#
+        receiver2 = []		 	# 받는 사람을 한명씩으로 만들기 위해 리스트에 받는 사람 한명씩 찍히도록 for 문 추가
+        receiver2.append(person)	#
+        msg = Message(title, sender = senders, recipients = receiver2)
+        msg.body = content
+        mail.send(msg)
     Sent = len(receiver)	# 메일 수신자 count =  Mail Sent Data
     return Dashboard(Sent)	# 고도화 예정 -> 성공적으로 발송된 Mail 갯수로 정확한 Data 구현
 
