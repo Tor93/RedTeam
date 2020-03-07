@@ -59,8 +59,7 @@ def email2(senders, receiver,title,content):
             receiver2 = []
             receiver2.append(person)	
             msg = Message(title, sender = senders, recipients = receiver2)
-            msg.body = content
-            msg.html = content + '<a href="http://192.168.80.134:5000/dashboard?link=%s">test</a>' % code()
+            msg.html = content + '<a href="http://192.168.80.134:5000/dashboard?link=%s">https://google.com</a>' % code()
             mail.send(msg)
             sql = "insert into user(email_address, email_sent) values(%s,%s)"
             curs.execute(sql,(receiver2, 'Sent'))
