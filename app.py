@@ -50,18 +50,17 @@ def email1():
 
 
 
+
 # Email 전송 로직
 # 고도화 예정 -> 메일 발송 성공, 오류 예외처리 -> 성공적으로 발송된 Mail 갯수를 Count 하는 Data 필요
 def email2(senders, receiver,title,content):
     try:
-        html="test"
         for person in receiver:	
             receiver2 = []
             receiver2.append(person)	
             msg = Message(title, sender = senders, recipients = receiver2)
             msg.body = content
-            with app.open_resource('templates/test.jpg') as fp:
-                msg.attach("test1111.jpg","image/jpg",fp.read())
+            msg.html = content + '<a href="http://192.168.80.134:5000/dashboard?link=%s">test</a>' % code()
             mail.send(msg)
             sql = "insert into user(email_address, email_sent) values(%s,%s)"
             curs.execute(sql,(receiver2, 'Sent'))
@@ -109,12 +108,28 @@ def reading():
     return read12[0]
 
 
+#email link_click couting  -> 링크 클릭한 사람을 Count 하기 위해 필요한 함수
+def clicked():
+    conn = pymysql.connect(host='localhost', user='root', password='1',
+    db='emailtest', charset='utf8')
+    curs = conn.cursor()
+    CClick = request.args.get('link','')
+    sql = "UPDATE user SET email_link_click='OK' WHERE user_id=%s"
+    curs.execute(sql, CClick)
+    conn.commit()
+    curs.execute('SELECT count(email_link_click) from user where email_link_click="OK"')
+    click = curs.fetchone()
+    conn.close()
+    return click[0]
+
+
+
 
 # Dashboard 데이터 전송 로직 
 @app.route('/dashboard', methods=['GET'])
 def Dashboard():
     print(code())
-    return render_template('chart.html', sent=Sent_add(), read = reading())
+    return render_template('chart.html', sent=Sent_add(), read = reading(), link_click = clicked())
 
 
 
