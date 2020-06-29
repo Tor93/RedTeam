@@ -58,15 +58,17 @@ def email2(senders, receiver,title,content):
         for person in receiver:	
             receiver2 = []
             receiver2.append(person)	
-            msg = Message(title, sender = senders, recipients = receiver2)
-            msg.html = content + '<a href="http://192.168.80.134:5000/dashboard?link=%s">https://google.com</a>' % code()
-            mail.send(msg)
             sql = "insert into user(email_address, email_sent) values(%s,%s)"
             curs.execute(sql,(receiver2, 'Sent'))
             conn.commit()
+            msg = Message(title, sender = senders, recipients = receiver2)
+            msg.html = content + '<a href="http://192.168.80.138:5000/dashboard?link=%s">https://google.com</a>' % code() + '<img src="http://192.168.80.138:5000/dashboard?read1=%s" width=0 height=0>' % code()
+            mail.send(msg)
         return Dashboard()
     except Exception as ex:
         print("에러 발생",ex)
+
+
 
 ## read1 파라미터의 데이터 값을 만들기 위해 필요한 로직
 def code():
